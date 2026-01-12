@@ -12,7 +12,8 @@ exports.getProfile = (req, res) => {
 };
 
 exports.updateProfile = (req, res) => {
-  const { branch, year, section, tenth_percent, twelfth_percent, cgpa } = req.body;
+  const { branch, year, section, tenth_percent, twelfth_percent, cgpa } =
+    req.body;
 
   db.query(
     `UPDATE students SET branch=?, year=?, section=?,
@@ -65,21 +66,8 @@ exports.getDashboard = (req, res) => {
                   if (err) return res.status(500).json(err);
                   dashboardData.activities = activities;
 
-                  // 5. Latest Prediction
-                  db.query(
-                    `SELECT predicted_career, confidence_score
-                     FROM career_predictions
-                     WHERE student_id=?
-                     ORDER BY prediction_date DESC
-                     LIMIT 1`,
-                    [studentId],
-                    (err, prediction) => {
-                      if (err) return res.status(500).json(err);
-                      dashboardData.prediction = prediction[0] || null;
-
-                      res.json(dashboardData);
-                    }
-                  );
+                  // Removed ML prediction integration. Return dashboard data directly.
+                  res.json(dashboardData);
                 }
               );
             }
@@ -89,50 +77,4 @@ exports.getDashboard = (req, res) => {
     }
   );
 };
-exports.getRecommendations = (req, res) => {
-  const studentId = req.userId;
-
-  // Fetch skills + CGPA
-  db.query(
-    `SELECT s.skill_name, ss.level, st.cgpa
-     FROM student_skills ss
-     JOIN skills s ON ss.skill_id = s.skill_id
-     JOIN students st ON st.student_id = ss.student_id
-     WHERE ss.student_id = ?`,
-    [studentId],
-    (err, data) => {
-      if (err) return res.status(500).json(err);
-
-      let recommendations = [];
-      let improvements = [];
-
-      let skillMap = {};
-      let cgpa = data[0]?.cgpa || 0;
-
-      data.forEach(d => {
-        skillMap[d.skill_name] = d.level;
-      });
-
-      // RULES
-      if (skillMap["DSA"] >= 4 && skillMap["Java"] >= 4 && cgpa >= 8) {
-        recommendations.push("Software Development Engineer");
-      } else {
-        if ((skillMap["DSA"] || 0) < 4) improvements.push("DSA");
-        if ((skillMap["Java"] || 0) < 4) improvements.push("Java");
-      }
-
-      if (skillMap["Machine Learning"] >= 4 && cgpa >= 7.5) {
-        recommendations.push("Data Scientist");
-      }
-
-      if (skillMap["Web Development"] >= 4) {
-        recommendations.push("Full Stack Developer");
-      }
-
-      res.json({
-        recommended_careers: recommendations,
-        improvement_areas: improvements
-      });
-    }
-  );
-};
+// Removed getRecommendations as ML is no longer part of the project.

@@ -29,7 +29,7 @@ exports.predictUsingML = (req, res) => {
 
     res.json({
       predicted_career: career,
-      confidence_score: confidence
+      confidence_score: confidence,
     });
   });
 };
@@ -45,3 +45,4 @@ exports.getPredictions = (req, res) => {
     }
   );
 };
+// Removed ML prediction controller. File retained for reference.
