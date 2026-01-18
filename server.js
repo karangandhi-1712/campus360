@@ -6,6 +6,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const semesterRoutes = require("./routes/semesterRoutes");
 const skillRoutes = require("./routes/skillRoutes");
 const activityRoutes = require("./routes/activityRoutes");
+const forumRoutes = require("./routes/forumRoutes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use("/api/students", studentRoutes);
 app.use("/api/semesters", semesterRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/activities", activityRoutes);
+app.use("/api/forum", forumRoutes);
 // Removed ML prediction route
 
 app.listen(5000, () => {

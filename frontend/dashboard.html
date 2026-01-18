@@ -1,79 +1,93 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Campus360 Dashboard</title>
     <link rel="stylesheet" href="style.css" />
-    <!-- Chart.js CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    <h1>📊 Campus360 Student Dashboard</h1>
-    <div class="card">
-      <h3>Profile Completion</h3>
-      <div style="background: #eee; width: 100%; height: 20px">
-        <div
-          id="progressBar"
-          style="height: 20px; width: 0%; background: #2ecc71"
-        ></div>
+    <nav>
+      <h2>Campus360</h2>
+      <div>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="forum.html">Forum</a>
+        <button id="logoutBtn" onclick="logout()">Logout</button>
       </div>
-      <p id="progressText"></p>
+    </nav>
+    <div class="dashboard-container">
+      <header>
+        <h1><span class="logo">🎓</span> Campus360 Student Dashboard</h1>
+        <div class="profile-summary">
+          <div class="avatar-glow"></div>
+          <div class="profile-info" id="profile"></div>
+        </div>
+      </header>
+      <main>
+        <section class="progress-section card animated-fadein">
+          <h3>Profile Completion</h3>
+          <div class="progress-bar-bg">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+          <p id="progressText"></p>
+        </section>
+        <section class="grid">
+          <div class="card animated-slidein" id="skills"></div>
+          <div class="card animated-slidein" id="activities"></div>
+          <div class="card animated-slidein" id="sgpa-card">
+            <h3>
+              SGPA Progress
+              <span
+                id="cgpa-label"
+                style="font-size: 1rem; color: #3498db; margin-left: 10px"
+              ></span>
+            </h3>
+            <canvas id="sgpaChart" height="120"></canvas>
+          </div>
+        </section>
+        <section class="forms-grid">
+          <div class="card animated-popin">
+            <h3>Update Profile</h3>
+            <input id="section" placeholder="Section" />
+            <input id="tenth" placeholder="10th Percentage" />
+            <input id="twelth" placeholder="12th Percentage" />
+            <input id="cgpa" placeholder="CGPA" />
+            <button onclick="updateProfile()">Save Profile</button>
+          </div>
+          <div class="card animated-popin">
+            <h3>Add Skill</h3>
+            <select id="skill_id">
+              <option value="3">Java</option>
+              <option value="5">DSA</option>
+              <option value="6">Web Development</option>
+            </select>
+            <input id="skill_level" placeholder="Level (1–5)" />
+            <button onclick="addSkill()">Add Skill</button>
+          </div>
+          <div class="card animated-popin">
+            <h3>Add Semester</h3>
+            <input id="sem_no" placeholder="Semester Number" />
+            <input id="sgpa" placeholder="SGPA" />
+            <button onclick="addSemester()">Add Semester</button>
+          </div>
+          <div class="card animated-popin">
+            <h3>Add Activity</h3>
+            <input id="act_type" placeholder="Type (Project / Internship)" />
+            <input id="act_title" placeholder="Title" />
+            <input id="act_date" type="date" />
+            <button onclick="addActivity()">Add Activity</button>
+          </div>
+        </section>
+      </main>
+      <div id="toast" class="toast"></div>
     </div>
-
-    <div class="grid">
-      <div class="card" id="profile"></div>
-    </div>
-    <div class="grid">
-      <div class="card" id="skills"></div>
-      <div class="card">
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>Campus360 Dashboard</title>
-            <link rel="stylesheet" href="style.css" />
-          </head>
-          <body>
-            <h1>Campus360 Dashboard</h1>
-            <div class="card" id="profile"></div>
-            <div class="card" id="skills"></div>
-            <div class="card" id="activities"></div>
-            <div class="card">
-              <h3>Update Profile</h3>
-              <input id="section" placeholder="Section" /><br /><br />
-              <input id="tenth" placeholder="10th Percentage" /><br /><br />
-              <input id="twelth" placeholder="12th Percentage" /><br /><br />
-              <input id="cgpa" placeholder="CGPA" /><br /><br />
-              <button onclick="updateProfile()">Save Profile</button>
-            </div>
-            <div class="card">
-              <h3>Add Skill</h3>
-              <select id="skill_id">
-                <option value="3">Java</option>
-                <option value="5">DSA</option>
-                <option value="6">Web Development</option></select
-              ><br /><br />
-              <input id="skill_level" placeholder="Level (1–5)" /><br /><br />
-              <button onclick="addSkill()">Add Skill</button>
-            </div>
-            <div class="card">
-              <h3>Add Semester</h3>
-              <input id="sem_no" placeholder="Semester Number" /><br /><br />
-              <input id="sgpa" placeholder="SGPA" /><br /><br />
-              <button onclick="addSemester()">Add Semester</button>
-            </div>
-            <div class="card">
-              <h3>Add Activity</h3>
-              <input
-                id="act_type"
-                placeholder="Type (Project / Internship)"
-              /><br /><br />
-              <input id="act_title" placeholder="Title" /><br /><br />
-              <input id="act_date" type="date" /><br /><br />
-              <button onclick="addActivity()">Add Activity</button>
-            </div>
-            <script src="script.js"></script>
-          </body>
-        </html>
-      </div>
-    </div>
+    <script src="script.js"></script>
   </body>
 </html>
